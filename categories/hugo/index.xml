@@ -6,6 +6,15 @@
         <description>Recent content in Hugo on 欢迎来到我的博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
-        <copyright>Example Person</copyright><atom:link href="https://wangyipeng110.github.io/dev/categories/hugo/index.xml" rel="self" type="application/rss+xml" />
+        <copyright>Example Person</copyright>
+        <lastBuildDate>Mon, 25 Nov 2024 15:24:50 +0800</lastBuildDate><atom:link href="https://wangyipeng110.github.io/dev/categories/hugo/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>hugo搭建</title>
+        <link>https://wangyipeng110.github.io/dev/p/hugo%E6%90%AD%E5%BB%BA/</link>
+        <pubDate>Mon, 25 Nov 2024 15:24:50 +0800</pubDate>
+        
+        <guid>https://wangyipeng110.github.io/dev/p/hugo%E6%90%AD%E5%BB%BA/</guid>
+        <description></description>
+        </item>
+        
     </channel>
 </rss>
