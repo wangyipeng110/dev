@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="mysql优化学习">
+<title>mysql优化学习</title>
+
+<link rel='canonical' href='https://wangyipeng110.github.io/dev/p/mysql%E4%BC%98%E5%8C%96%E5%AD%A6%E4%B9%A0/'>
+
+<link rel="stylesheet" href="/dev/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="mysql优化学习">
+<meta property='og:description' content="mysql优化学习">
+<meta property='og:url' content='https://wangyipeng110.github.io/dev/p/mysql%E4%BC%98%E5%8C%96%E5%AD%A6%E4%B9%A0/'>
+<meta property='og:site_name' content='欢迎来到我的博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-11-25T15:24:50&#43;08:00'/><meta property='article:modified_time' content='2024-11-25T15:24:50&#43;08:00'/>
+<meta name="twitter:title" content="mysql优化学习">
+<meta name="twitter:description" content="mysql优化学习">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "dark");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/dev/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/dev/img/7aeeac4238384038b13f1ed92585cc85_hu160871082565811537.jpeg" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/dev">欢迎来到我的博客</a></h1>
+            <h2 class="site-description">这是一个伤心的故事记录下慢慢忘记的事情</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/dev/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/dev/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/dev/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/dev/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/dev/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://wangyipeng110.github.io/dev/" selected>中文</option>
+                                
+                                    <option value="https://wangyipeng110.github.io/dev/zh-cn/" >中文</option>
+                                
+                                    <option value="https://wangyipeng110.github.io/dev/ar/" >عربي</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li>
+      <ol>
+        <li><a href="#在navicat-里面查询-sql-下面这句话查看是否开启慢日志">在navicat 里面查询 sql 下面这句话查看是否开启慢日志</a>
+          <ol>
+            <li><a href="#下面图片是对应得信息">下面图片是对应得信息</a></li>
+          </ol>
+        </li>
+        <li><a href="#然后在对应得mysql-使用-mysqldumpslow-工具是慢查询自带的分析慢查询工具一般只要安装了mysql就会有该工具">然后在对应得mysql 使用 mysqldumpslow 工具是慢查询自带的分析慢查询工具，一般只要安装了mysql，就会有该工具。</a>
+          <ol>
+            <li><a href="#然后在宝塔输入命令好家伙报错">然后在宝塔输入命令好家伙报错</a></li>
+            <li><a href="#这是说明找不到这个文件-所以-覆盖下-执行命令">这是说明找不到这个文件 所以 覆盖下 执行命令</a></li>
+            <li><a href="#然后查看一下把--输入命令--mysqldumpslow---help">然后查看一下把  输入命令  mysqldumpslow &ndash;help</a></li>
+            <li><a href="#然后打开-msql-输入命令--show-variables-like--slow_query_log-查看对应得目录用于下面">然后打开 msql 输入命令  SHOW VARIABLES LIKE  &lsquo;%slow_query_log%&rsquo;; 查看对应得目录用于下面</a></li>
+            <li><a href="#这是一些解释对应得">这是一些解释对应得</a></li>
+          </ol>
+        </li>
+        <li><a href="#然后开始找到对应得数据进行优化-通过分析和统计mysql慢查询日志文件可以找出不同查询语句的执行时间和执行次数等指标以便进一步优化和调整查询语句的性能和执行效率优化的方法通常包括以下几个方面">然后开始找到对应得数据进行优化 通过分析和统计MySQL慢查询日志文件，可以找出不同查询语句的执行时间和执行次数等指标，以便进一步优化和调整查询语句的性能和执行效率。优化的方法通常包括以下几个方面：</a>
+          <ol>
+            <li><a href="#添加或修改表索引以提高查询速度">添加或修改表索引，以提高查询速度。</a></li>
+            <li><a href="#优化sql查询语句使用优化的sql语句可以使查询性能得到提升">优化SQL查询语句，使用优化的SQL语句可以使查询性能得到提升。</a></li>
+            <li><a href="#分区分表得情况讲解-目前项目没有用到">分区分表得情况讲解 目前项目没有用到</a></li>
+            <li><a href="#调整mysql服务器参数如增加缓存区大小减少线程数等以达到更好的性能优化效果">调整MySQL服务器参数，如增加缓存区大小、减少线程数等，以达到更好的性能优化效果。</a></li>
+            <li><a href="#升级数据库版本选择更高效的数据库版本可以对查询性能产生显著影响">升级数据库版本，选择更高效的数据库版本可以对查询性能产生显著影响。</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/dev/categories/mysql/" style="background-color: #2a9d8f; color: #fff;">
+                Mysql
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/dev/p/mysql%E4%BC%98%E5%8C%96%E5%AD%A6%E4%B9%A0/">mysql优化学习</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            mysql优化学习
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Nov 25, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    3 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h3 id="在navicat-里面查询-sql-下面这句话查看是否开启慢日志">在navicat 里面查询 sql 下面这句话查看是否开启慢日志
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">SHOW</span><span class="w"> </span><span class="n">VARIABLES</span><span class="w"> </span><span class="k">LIKE</span><span class="w">  </span><span class="s1">&#39;%slow_query_log%&#39;</span><span class="p">;</span><span class="w">  </span><span class="o">//</span><span class="err">查看是否开启日志</span><span class="w"> </span><span class="err">默认</span><span class="n">off</span><span class="w"> </span><span class="err">未开启</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kt">set</span><span class="w"> </span><span class="n">global</span><span class="w"> </span><span class="n">slow_query_log</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="w">   </span><span class="o">//</span><span class="err">开启慢日志</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="o">-----------------------------------------------------</span><span class="c1">--
+</span></span></span><span class="line"><span class="cl"><span class="c1">show global variables like &#39;long_query_time&#39;;  //查看多少秒
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">set</span><span class="w"> </span><span class="n">global</span><span class="w"> </span><span class="n">long_query_time</span><span class="o">=</span><span class="mi">3</span><span class="p">;</span><span class="w">   </span><span class="o">//</span><span class="err">这四个都是都一样得</span><span class="w"> </span><span class="err">设置时间</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SHOW</span><span class="w"> </span><span class="n">VARIABLES</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;long_query_time%&#39;</span><span class="p">;</span><span class="w">  </span><span class="o">//</span><span class="err">查看慢日志设定得值</span><span class="w"> </span><span class="err">单位是秒</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kt">set</span><span class="w"> </span><span class="n">long_query_time</span><span class="w"> </span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="w">  </span><span class="o">//</span><span class="err">设定慢查询得时间</span><span class="w"> </span><span class="err">不得大于</span><span class="mi">1</span><span class="w"> </span><span class="err">秒</span><span class="w">  </span><span class="err">单位是秒随便改秒</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">-------------------------------------------------------------------------</span><span class="c1">--
+</span></span></span><span class="line"><span class="cl"><span class="c1">
+</span></span></span><span class="line"><span class="cl"><span class="c1">show global status like &#39;%Slow_queries%&#39;;  //查看有多少sql 不在上面设置得时间里面
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="o">//</span><span class="err">如果需要永久生效，就必须修改配置文件</span><span class="n">my</span><span class="p">.</span><span class="n">cnf</span><span class="err">，</span><span class="p">[</span><span class="n">mysqld</span><span class="p">]</span><span class="err">下增加或修改参数如下：</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="n">slow_query_log</span><span class="o">=</span><span class="mi">1</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="n">slow_query_log_file</span><span class="o">=/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">atguigu</span><span class="o">-</span><span class="n">slow</span><span class="p">.</span><span class="n">log</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="n">long_query_time</span><span class="o">=</span><span class="mi">3</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="n">log_output</span><span class="o">=</span><span class="n">FILE</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="下面图片是对应得信息">下面图片是对应得信息
+</h4><p><img src="/dev/p/mysql%E4%BC%98%E5%8C%96%E5%AD%A6%E4%B9%A0/1.png"
+	width="889"
+	height="251"
+	srcset="/dev/p/mysql%E4%BC%98%E5%8C%96%E5%AD%A6%E4%B9%A0/1_hu13771974159836445302.png 480w, /dev/p/mysql%E4%BC%98%E5%8C%96%E5%AD%A6%E4%B9%A0/1_hu12916144449601789010.png 1024w"
+	loading="lazy"
+	
+		alt="Photo by Florian Klauer on Unsplash"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="354"
+		data-flex-basis="850px"
+	
+></p>
+<h3 id="然后在对应得mysql-使用-mysqldumpslow-工具是慢查询自带的分析慢查询工具一般只要安装了mysql就会有该工具">然后在对应得mysql 使用 mysqldumpslow 工具是慢查询自带的分析慢查询工具，一般只要安装了mysql，就会有该工具。
+</h3><h4 id="然后在宝塔输入命令好家伙报错">然后在宝塔输入命令好家伙报错
+</h4><p>mysqldumpslow -s t -t 3 /www/server/data/mysql-slow.log
+-bash: mysqldumpslow: command not found</p>
+<h4 id="这是说明找不到这个文件-所以-覆盖下-执行命令">这是说明找不到这个文件 所以 覆盖下 执行命令
+</h4><p>ln -sf /www/server/mysql/bin/mysqldumpslow /usr/bin;    // 因为我的文件在这里</p>
+<h4 id="然后查看一下把--输入命令--mysqldumpslow---help">然后查看一下把  输入命令  mysqldumpslow &ndash;help
+</h4><p><img src="/dev/p/mysql%E4%BC%98%E5%8C%96%E5%AD%A6%E4%B9%A0/2.png"
+	width="466"
+	height="445"
+	srcset="/dev/p/mysql%E4%BC%98%E5%8C%96%E5%AD%A6%E4%B9%A0/2_hu16262921018526279733.png 480w, /dev/p/mysql%E4%BC%98%E5%8C%96%E5%AD%A6%E4%B9%A0/2_hu15371136040280765534.png 1024w"
+	loading="lazy"
+	
+		alt="Photo by Florian Klauer on Unsplash"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="104"
+		data-flex-basis="251px"
+	
+></p>
+<h4 id="然后打开-msql-输入命令--show-variables-like--slow_query_log-查看对应得目录用于下面">然后打开 msql 输入命令  SHOW VARIABLES LIKE  &lsquo;%slow_query_log%&rsquo;; 查看对应得目录用于下面
+</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="w">   </span><span class="n">mysqldumpslow</span><span class="w"> </span><span class="o">-</span><span class="n">s</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">-</span><span class="n">t</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">server</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="n">slow</span><span class="p">.</span><span class="n">log</span><span class="w">       </span><span class="o">//</span><span class="err">取出使用最多的</span><span class="mi">10</span><span class="err">条慢查询</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">mysqldumpslow</span><span class="w"> </span><span class="o">-</span><span class="n">s</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">-</span><span class="n">t</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="n">slow</span><span class="p">.</span><span class="n">log</span><span class="w">   </span><span class="o">//</span><span class="err">取出查询时间最慢的</span><span class="mi">3</span><span class="err">条慢查询</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="n">mysqldumpslow</span><span class="w"> </span><span class="o">-</span><span class="n">s</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">-</span><span class="n">t</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">-</span><span class="n">g</span><span class="w"> </span><span class="err">“</span><span class="k">left</span><span class="w"> </span><span class="k">join</span><span class="err">”</span><span class="w"> </span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="n">slow</span><span class="p">.</span><span class="n">log</span><span class="w">  </span><span class="o">//</span><span class="err">得到按照时间排序的前</span><span class="mi">10</span><span class="err">条里面含有左连接的查询语句</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">mysqldumpslow</span><span class="w"> </span><span class="o">-</span><span class="n">s</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">-</span><span class="n">t</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">-</span><span class="n">g</span><span class="w"> </span><span class="s1">&#39;left join&#39;</span><span class="w"> </span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="n">slow</span><span class="p">.</span><span class="n">log</span><span class="w">   </span><span class="o">//</span><span class="err">按照扫描行数最多的前</span><span class="mi">10</span><span class="err">条语句</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="n">mysqldumpslow</span><span class="w"> </span><span class="o">-</span><span class="n">s</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">-</span><span class="n">t</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="n">slow</span><span class="p">.</span><span class="n">log</span><span class="w">  </span><span class="o">//</span><span class="err">按查询总时间排序，显示前</span><span class="mi">10</span><span class="err">条查询信息</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="n">mysqldumpslow</span><span class="w"> </span><span class="o">-</span><span class="n">s</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">-</span><span class="n">t</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="n">slow</span><span class="p">.</span><span class="n">log</span><span class="w"> </span><span class="o">//</span><span class="err">查询次数排序，显示前</span><span class="mi">20</span><span class="err">条查询信息</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="err">其中，</span><span class="o">-</span><span class="n">s</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="err">表示按查询总时间排序，</span><span class="o">-</span><span class="n">s</span><span class="w"> </span><span class="n">c表示按查询次数排序</span><span class="err">，</span><span class="o">-</span><span class="n">t</span><span class="w"> </span><span class="mi">10</span><span class="err">表示显示前</span><span class="mi">10</span><span class="err">条查询信息。</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   
+</span></span></span><span class="line"><span class="cl"><span class="w">   
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">s</span><span class="p">:</span><span class="err">是表示按何种方式排序</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">c</span><span class="p">:</span><span class="err">访问次数</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">l</span><span class="p">:</span><span class="err">锁定时间</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">r</span><span class="p">:</span><span class="err">返回记录</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">t</span><span class="p">:</span><span class="err">查询时间</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">al</span><span class="p">:</span><span class="err">平均锁定时间</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ar</span><span class="p">:</span><span class="err">平均返回记录数</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">at</span><span class="p">:</span><span class="err">平均查询时间</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">t</span><span class="p">:</span><span class="err">即为返回前面多少条的数据</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">g</span><span class="p">:</span><span class="err">后边搭配一个正则匹配模式，大小写不敏感的</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="/dev/p/mysql%E4%BC%98%E5%8C%96%E5%AD%A6%E4%B9%A0/3.png"
+	width="1046"
+	height="419"
+	srcset="/dev/p/mysql%E4%BC%98%E5%8C%96%E5%AD%A6%E4%B9%A0/3_hu7944080180420693211.png 480w, /dev/p/mysql%E4%BC%98%E5%8C%96%E5%AD%A6%E4%B9%A0/3_hu4367758302640421958.png 1024w"
+	loading="lazy"
+	
+		alt="Photo by Florian Klauer on Unsplash"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="249"
+		data-flex-basis="599px"
+	
+></p>
+<h4 id="这是一些解释对应得">这是一些解释对应得
+</h4><h3 id="然后开始找到对应得数据进行优化-通过分析和统计mysql慢查询日志文件可以找出不同查询语句的执行时间和执行次数等指标以便进一步优化和调整查询语句的性能和执行效率优化的方法通常包括以下几个方面">然后开始找到对应得数据进行优化 通过分析和统计MySQL慢查询日志文件，可以找出不同查询语句的执行时间和执行次数等指标，以便进一步优化和调整查询语句的性能和执行效率。优化的方法通常包括以下几个方面：
+</h3><h4 id="添加或修改表索引以提高查询速度">添加或修改表索引，以提高查询速度。
+</h4><h4 id="优化sql查询语句使用优化的sql语句可以使查询性能得到提升">优化SQL查询语句，使用优化的SQL语句可以使查询性能得到提升。
+</h4><p>在 MySQL 中，添加或修改表索引是数据库优化中的重要步骤。索引有助于加速查询操作，尤其是在大数据量表中。下面我将介绍如何 添加 或 修改 MySQL 表的索引。</p>
+<ol>
+<li>添加索引
+1.1. 单列索引
+单列索引是指为单一列创建索引，适用于查询中经常使用某一列作为条件的情况。</li>
+</ol>
+<p>语法：</p>
+<p>sql
+复制代码
+CREATE INDEX index_name ON table_name(column_name);
+示例：为 xinli_user 表中的 user_id 列创建索引：</p>
+<p>sql
+复制代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_user_id</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="nf">xinli_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>1.2. 复合索引
+复合索引是指为多个列一起创建索引，适用于查询中经常涉及多个列的情况。复合索引能够显著提高针对多个列的查询效率。</p>
+<p>语法：</p>
+<p>sql
+复制代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">index_name</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="nf">table_name</span><span class="p">(</span><span class="n">column1</span><span class="p">,</span><span class="w"> </span><span class="n">column2</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>示例：为 xinli_user 表中的 user_id 和 email 两个列创建复合索引：
+sql
+复制代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_user_email</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="nf">xinli_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>1.3. 唯一索引
+唯一索引确保列中的所有值都是唯一的，适用于需要确保数据唯一性的列，例如主键或唯一键。</p>
+<p>语法：</p>
+<p>sql
+复制代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">index_name</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="nf">table_name</span><span class="p">(</span><span class="n">column_name</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>示例：为 xinli_user 表中的 email 列创建唯一索引：</p>
+<p>sql
+复制代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_unique_email</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="nf">xinli_user</span><span class="p">(</span><span class="n">email</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>1.4. 全文索引
+全文索引用于文本搜索，适用于对大量文本数据进行快速搜索的情况。通常用于 TEXT 类型列。
+语法：
+sql
+复制代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">index_name</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="nf">table_name</span><span class="p">(</span><span class="n">column_name</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>示例：为 xinli_user 表中的 description 列创建全文索引：
+sql
+复制代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">FULLTEXT</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_fulltext_description</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="nf">xinli_user</span><span class="p">(</span><span class="n">description</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>修改索引
+在 MySQL 中，不能直接修改已存在的索引。要修改索引，通常需要先删除原有索引，然后重新创建新的索引。</li>
+</ol>
+<p>2.1. 删除索引
+如果你需要删除现有的索引，可以使用 DROP INDEX 命令。删除索引时，需要指定索引所在的表。</p>
+<p>语法：</p>
+<p>sql
+复制代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">DROP</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">index_name</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">table_name</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>示例：删除 xinli_user 表中的 idx_user_id 索引：
+sql
+复制代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">DROP</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_user_id</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">xinli_user</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>2.2. 重建索引
+如果你需要修改索引的结构或列，可以先删除现有索引，再创建新的索引。例如，假设你希望将复合索引从 (column1, column2) 改为 (column2, column1)，可以按照以下步骤操作：</p>
+<p>删除旧索引：</p>
+<p>sql
+复制代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">DROP</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_old_index</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">table_name</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>创建新索引：</p>
+<p>sql
+复制代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_new_index</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="nf">table_name</span><span class="p">(</span><span class="n">column2</span><span class="p">,</span><span class="w"> </span><span class="n">column1</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>2.3. 索引修改实例
+假设你有一个索引 idx_user_email，原本创建的是 (user_id, email)，但是你想要修改为 (email, user_id) 的复合索引。你需要先删除原来的索引，再创建新的索引：</p>
+<p>sql
+复制代码
+&ndash; 删除旧的索引
+DROP INDEX idx_user_email ON xinli_user;</p>
+<p>&ndash; 创建新的索引
+CREATE INDEX idx_email_user ON xinli_user(email, user_id);
+3. 查看现有索引
+在修改或删除索引之前，查看现有索引是很重要的。你可以使用 SHOW INDEX 命令查看一个表的所有索引。</p>
+<p>语法：
+sql
+复制代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">SHOW</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">table_name</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>示例：
+sql
+复制代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">SHOW</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">xinli_user</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="4">
+<li>优化索引使用
+选择性：高选择性的列（有很多不同值的列）适合创建索引。
+避免冗余索引：不要为已经存在的复合索引中的前缀列创建单列索引。
+复合索引的顺序：复合索引的列顺序应根据查询条件中的使用频率来决定。
+避免过多索引：索引会增加 INSERT、UPDATE 和 DELETE 操作的成本，因此要平衡查询优化与写入性能。</li>
+<li>查看索引的执行计划
+在添加或修改索引后，可以使用 EXPLAIN 命令查看查询执行计划，确保新的索引被正确使用。例如：</li>
+</ol>
+<p>sql
+复制代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">EXPLAIN</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">xinli_user</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">123</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>执行计划将显示是否使用了你创建的索引。</p>
+<p>总结
+使用 CREATE INDEX 创建新索引，适用于单列索引、复合索引、唯一索引等。
+使用 DROP INDEX 删除现有索引，修改索引时通常需要先删除旧索引再创建新索引。
+使用 SHOW INDEX 查看现有索引。
+定期优化索引，避免冗余索引和过多的索引，以平衡查询性能与写入性能。
+通过这些步骤，你可以有效地为 MySQL 表添加、修改和管理索引，从而优化查询性能。</p>
+<h4 id="分区分表得情况讲解-目前项目没有用到">分区分表得情况讲解 目前项目没有用到
+</h4><h5 id="如何选择分区和分表策略">如何选择分区和分表策略？
+</h5><h6 id="选择分区">选择分区：
+</h6><p>当数据量大，但仍然希望保持表结构简单时，使用 分区。分区不需要拆分表，它将表物理划分为多个分区，查询时，MySQL 会自动决定扫描哪些分区，提升查询性能。
+分区适用于那些按时间或范围进行查询的表。</p>
+<h6 id="选择分表">选择分表：
+</h6><p>当数据量极大，单个表的写入性能变得非常低，或者当数据库的性能需要水平扩展时，使用 分表。
+分表适合需要分散存储的数据，通常通过哈希分表或基于某些字段的范围分表。</p>
+<h5 id="总结">总结
+</h5><p>分区和分表的选择和使用，通常取决于以下几个因素：</p>
+<h6 id="数据量当数据量非常大单表查询和写入变得低效时可以考虑分区或分表">数据量：当数据量非常大，单表查询和写入变得低效时，可以考虑分区或分表。
+</h6><h6 id="查询模式如果查询经常涉及某些字段如时间id-范围等分区可以加速这些查询">查询模式：如果查询经常涉及某些字段（如时间、ID 范围等），分区可以加速这些查询。
+</h6><h6 id="写入压力高频的写入操作可能会使单表性能下降分表可以减少写入压力">写入压力：高频的写入操作可能会使单表性能下降，分表可以减少写入压力。
+</h6><h6 id="业务需求某些业务场景如多租户历史数据归档等要求将数据分开存储">业务需求：某些业务场景（如多租户、历史数据归档等）要求将数据分开存储。
+</h6><h6 id="扩展性需求当需要扩展数据库的存储和计算能力时分表是一个常用策略">扩展性需求：当需要扩展数据库的存储和计算能力时，分表是一个常用策略。
+</h6><h6 id="通过合理的分区和分表策略可以显著提高数据库的性能和可维护性">通过合理的分区和分表策略，可以显著提高数据库的性能和可维护性。
+</h6><h4 id="调整mysql服务器参数如增加缓存区大小减少线程数等以达到更好的性能优化效果">调整MySQL服务器参数，如增加缓存区大小、减少线程数等，以达到更好的性能优化效果。
+</h4><h4 id="升级数据库版本选择更高效的数据库版本可以对查询性能产生显著影响">升级数据库版本，选择更高效的数据库版本可以对查询性能产生显著影响。
+</h4>
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/dev/p/mysql%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89%E6%9C%89%E5%85%B3%E6%9F%A5%E8%AF%A2%E7%9A%84/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">mysql查询所有有关查询的</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2024 Example Person
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.29.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/dev/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<style>
+    body {
+        
+       
+       
+    }
+
+  </style>
+<script src=https://wangyipeng110.github.io/dev/background/sakura.js></script>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<script>
+const staticDir = "https://wangyipeng110.github.io/dev/"
+const ap = new APlayer({
+    container: document.getElementById('aplayer'),
+    fixed: true,
+    lrcType: 3,
+    autoplay:true,
+    audio: [
+        
+        
+        
+        
+        
+        
+        
+        {
+            
+            name: 'MINMIN',
+            artist: 'artist',
+            url: staticDir + '周杰伦 - 蒲公英的约定 (钢琴版).ogg',
+            cover: staticDir + 'videoframe_9005.png',
+            lrc: "",
+
+        }
+    ]
+});
+</script>
+
+<script>
+  
+  const cssPath = "https://wangyipeng110.github.io/dev/waifu/waifu.css"
+  const tipsJsonPath = "https://wangyipeng110.github.io/dev/waifu/waifu-tips.json"
+  
+  const live2d_path = "https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/";
+
+  
+  function loadExternalResource(url, type) {
+    return new Promise((resolve, reject) => {
+      let tag;
+      if (type === "css") {
+        tag = document.createElement("link");
+        tag.rel = "stylesheet";
+        tag.href = url;
+      }
+      else if (type === "js") {
+        tag = document.createElement("script");
+        tag.src = url;
+      }
+      if (tag) {
+        tag.onload = () => resolve(url);
+        tag.onerror = () => reject(url);
+        document.head.appendChild(tag);
+      }
+    });
+  }
+
+  
+  if (screen.width >= 768) {
+    Promise.all([
+      loadExternalResource(cssPath, "css"),
+      loadExternalResource(live2d_path + "live2d.min.js", "js"),
+      loadExternalResource(live2d_path + "waifu-tips.js", "js")
+    ]).then(() => {
+      
+      initWidget({
+        waifuPath: tipsJsonPath,
+        cdnPath: "https://fastly.jsdelivr.net/gh/fghrsh/live2d_api/",
+        tools: ["hitokoto", "asteroids", "quit"]
+      });
+    });
+  }
+</script>
+
+
+
+
+    </body>
+</html>
