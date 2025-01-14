@@ -304,6 +304,10 @@
         <li><a href="#在对应的控制器里面">在对应的控制器里面</a></li>
       </ol>
     </li>
+    <li><a href="#获取那个主页面传过来的ids">获取那个主页面传过来的ids</a></li>
+    <li><a href="#js的按钮时间修改">js的按钮时间修改</a></li>
+    <li><a href="#控制器-获取后台用户id">控制器 获取后台用户id</a></li>
+    <li><a href="#where-多条件in-or">where 多条件in or</a></li>
     <li><a href="#上面就是一些我了解的东西">上面就是一些我了解的东西</a></li>
   </ol>
 </nav>
@@ -373,7 +377,7 @@
 
 
                 <time class="article-time--reading">
-                    2 minute read
+                    3 minute read
                 </time>
             </div>
         
@@ -421,22 +425,34 @@
 </span><span class="lnt">12
 </span><span class="lnt">13
 </span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="nx">table</span><span class="p">.</span><span class="nx">bootstrapTable</span><span class="p">({</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="nx">search</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>  <span class="c1">//隐藏搜索
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">showToggle</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">showColumns</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">dblClickToEdit</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">fixedColumns</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">fixedRightNumber</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">showSearch</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>  <span class="c1">//隐藏多 搜索
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">commonSearch</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">visible</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">showExport</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>  <span class="c1">//隐藏导出
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">searchFormVisible</span><span class="o">:</span> <span class="kc">false</span>
-</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">pk</span><span class="o">:</span> <span class="s1">&#39;contracts_id&#39;</span><span class="p">,</span>  <span class="c1">//主键
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">sortName</span><span class="o">:</span> <span class="s1">&#39;contracts_id&#39;</span><span class="p">,</span> <span class="c1">//这里可以就是添加多个条件 例如: contracts_id desc,contracts_createtime asc
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                 <span class="nx">search</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>  <span class="c1">//隐藏或者开启那个页面的搜索
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">showToggle</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>  <span class="c1">//隐藏切换 页面搜索后面的那个切换
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">showColumns</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>  <span class="c1">//隐藏列  切换后面的那个显示列表
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">dblClickToEdit</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>  <span class="c1">//双击编辑 就是点列表的时候可以双击编辑
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="c1">//这俩是固定页面的
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">fixedColumns</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// 固定列代码
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">fixedRightNumber</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="c1">// 固定右侧第一列
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">fixedNumber</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span> <span class="c1">// 固定左侧10列
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="c1">//手动刷新
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">showRefresh</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>  <span class="c1">//这个是 刷新 是右边的刷新不是左面的
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="c1">//下面俩都打开才能显示多搜索
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">showSearch</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>  <span class="c1">//隐藏多 搜索
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">commonSearch</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>  <span class="c1">//隐藏搜索
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">searchFormVisible</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span> <span class="c1">//是否 进页面的时候就显示搜索多
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">visible</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>  <span class="c1">//隐藏
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">showExport</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>  <span class="c1">//隐藏导出
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">})</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="搜索的时候找寻对应的字段-这个默认是id--但是我们数据库一般都是-goods_id-所以就用到了在对应的控制器">搜索的时候找寻对应的字段 这个默认是id  但是我们数据库一般都是 goods_id 所以就用到了在对应的控制器
@@ -517,6 +533,25 @@
 </span><span class="lnt">19
 </span><span class="lnt">20
 </span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl">    <span class="p">{</span>
@@ -526,20 +561,39 @@
 </span></span><span class="line"><span class="cl">    <span class="nx">events</span><span class="o">:</span> <span class="nx">Table</span><span class="p">.</span><span class="nx">api</span><span class="p">.</span><span class="nx">events</span><span class="p">.</span><span class="nx">operate</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">buttons</span><span class="o">:</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">        <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;enrolluser&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">text</span><span class="o">:</span> <span class="s2">&#34;库存列表&#34;</span><span class="p">,</span><span class="c1">//按钮名称
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">classname</span><span class="o">:</span> <span class="s1">&#39;btn btn-xs btn-primary btn-dialog&#39;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">// classname: &#39;btn b
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// tn-xs btn-success btn-magic btn-dialog&#39;,
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">icon</span><span class="o">:</span> <span class="s1">&#39;fa fa-magic&#39;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;ku/index?ids={goods_id}&#39;</span><span class="p">,</span><span class="c1">//指向控制器对应方法
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">visible</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">row</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span> <span class="s2">&#34;enrolluser&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">text</span><span class="o">:</span> <span class="s2">&#34;库存列表&#34;</span><span class="p">,</span><span class="c1">//按钮名称
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">classname</span><span class="o">:</span> <span class="s1">&#39;btn btn-xs btn-primary btn-dialog&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// classname: &#39;btn b
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// tn-xs btn-success btn-magic btn-dialog&#39;,
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">icon</span><span class="o">:</span> <span class="s1">&#39;fa fa-magic&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;ku/index?ids={goods_id}&#39;</span><span class="p">,</span><span class="c1">//指向控制器对应方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">visible</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">row</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="c1">//返回true时按钮显示,返回false隐藏
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="kc">true</span><span class="p">;}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">//这里可以直接获取对应的条件显示 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// return row.contracts_audit_status == 0  &amp;&amp; row.admin == 1;  //这个admin 是用户的id 后台用户的 权限可以使用 我是控制器传过来的
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">extend</span><span class="o">:</span> <span class="s1">&#39;data-area=\&#39;[&#34;80%&#34;, &#34;80%&#34;]\&#39;&#39;</span><span class="p">,</span>   <span class="c1">//这个是弹窗的宽度
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">},</span>
 </span></span><span class="line"><span class="cl">    <span class="p">],</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">formatter</span><span class="o">:</span> <span class="nx">Table</span><span class="p">.</span><span class="nx">api</span><span class="p">.</span><span class="nx">formatter</span><span class="p">.</span><span class="nx">operate</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//刷新弹框提示
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// refresh: true,  // 确保设置为 true
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// success: function (data, ret) {
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// if (ret.code === 1) {
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">//   Layer.msg(ret.msg);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">//   // 刷新表格
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">//   $(&#34;#table&#34;).bootstrapTable(&#39;refresh&#39;);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">//    return false;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">//   }
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">//  },
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">//   error: function (data, ret) {
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">//   Layer.alert(ret.msg);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">//     return false;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">//    }
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">formatter</span><span class="o">:</span> <span class="nx">Table</span><span class="p">.</span><span class="nx">api</span><span class="p">.</span><span class="nx">formatter</span><span class="p">.</span><span class="nx">operate</span>  <span class="c1">//这个是格式化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="后端关联表表获取的值进行对应的搜索">后端关联表表获取的值进行对应的搜索
@@ -555,13 +609,29 @@
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"> <span class="kd">var</span> <span class="nx">table</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;#table&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">table</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;post-common-search.bs.table&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">table</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">                <span class="kd">var</span> <span class="nx">form</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;form&#34;</span><span class="p">,</span> <span class="nx">table</span><span class="p">.</span><span class="nx">$commonsearch</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">                <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;input[name=&#39;types.goods_type_name&#39;]&#34;</span><span class="p">,</span> <span class="nx">form</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s2">&#34;selectpage&#34;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s2">&#34;source&#34;</span><span class="p">,</span> <span class="s2">&#34;Type/index&#34;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s2">&#34;primaryKey&#34;</span><span class="p">,</span> <span class="s2">&#34;goods_type_name&#34;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s2">&#34;field&#34;</span><span class="p">,</span> <span class="s2">&#34;goods_type_name&#34;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s2">&#34;orderBy&#34;</span><span class="p">,</span> <span class="s2">&#34;goods_quanzhong desc&#34;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s2">&#34;pageSize&#34;</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="c1">//这个是获取的控制器对应的name
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;input[name=&#39;types.goods_type_name&#39;]&#34;</span><span class="p">,</span> <span class="nx">form</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s2">&#34;selectpage&#34;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s2">&#34;source&#34;</span><span class="p">,</span> <span class="s2">&#34;Type/index&#34;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s2">&#34;primaryKey&#34;</span><span class="p">,</span> <span class="s2">&#34;goods_type_name&#34;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s2">&#34;field&#34;</span><span class="p">,</span> <span class="s2">&#34;goods_type_name&#34;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s2">&#34;orderBy&#34;</span><span class="p">,</span> <span class="s2">&#34;goods_quanzhong desc&#34;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s2">&#34;pageSize&#34;</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span> <span class="c1">//普通获取的基本上
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">               <span class="c1">//这个是获取的id 然后 id 又加了条件 类型是 system 的值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                  <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;input[name=&#39;customers_source_id&#39;]&#34;</span><span class="p">,</span> <span class="nx">form</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s2">&#34;selectpage&#34;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s2">&#34;source&#34;</span><span class="p">,</span> <span class="s2">&#34;Categorys/index&#34;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s2">&#34;primaryKey&#34;</span><span class="p">,</span> <span class="s2">&#34;id&#34;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s2">&#34;field&#34;</span><span class="p">,</span> <span class="s2">&#34;name&#34;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s2">&#34;orderBy&#34;</span><span class="p">,</span> <span class="s2">&#34;id desc&#34;</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s2">&#34;pageSize&#34;</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;input[name=&#39;customers_recommendation_system_id&#39;]&#34;</span><span class="p">,</span> <span class="nx">form</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s2">&#34;params&#34;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                     <span class="k">return</span> <span class="p">{</span><span class="nx">custom</span><span class="o">:</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;System&#39;</span><span class="p">}};</span>
+</span></span><span class="line"><span class="cl">                 <span class="p">});</span>
 </span></span><span class="line"><span class="cl">                <span class="nx">Form</span><span class="p">.</span><span class="nx">events</span><span class="p">.</span><span class="nx">cxselect</span><span class="p">(</span><span class="nx">form</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">                <span class="nx">Form</span><span class="p">.</span><span class="nx">events</span><span class="p">.</span><span class="nx">selectpage</span><span class="p">(</span><span class="nx">form</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">            <span class="p">});</span>
@@ -586,8 +656,8 @@
 </span></span><span class="line"><span class="cl">                    <span class="p">[</span>
 </span></span><span class="line"><span class="cl">                        <span class="p">{</span><span class="nx">checkbox</span><span class="o">:</span> <span class="kc">true</span><span class="p">},</span>
 </span></span><span class="line"><span class="cl">                        <span class="p">{</span><span class="nx">field</span><span class="o">:</span> <span class="s1">&#39;goods_id&#39;</span><span class="p">,</span> <span class="nx">title</span><span class="o">:</span> <span class="nx">__</span><span class="p">(</span><span class="s1">&#39;Goods_id&#39;</span><span class="p">),</span><span class="nx">operate</span><span class="o">:</span> <span class="kc">false</span><span class="p">,},</span>
-</span></span><span class="line"><span class="cl">                        <span class="p">{</span><span class="nx">field</span><span class="o">:</span> <span class="s1">&#39;types.goods_type_name&#39;</span><span class="p">,</span> <span class="nx">title</span><span class="o">:</span> <span class="nx">__</span><span class="p">(</span><span class="s1">&#39;Goods_type&#39;</span><span class="p">),</span><span class="nx">operate</span><span class="o">:</span> <span class="s1">&#39;LIKE %...%&#39;</span><span class="p">,</span> <span class="nx">placeholder</span><span class="o">:</span> <span class="s1">&#39;模糊搜索，*表示任意字符&#39;</span><span class="p">},</span>
-</span></span><span class="line"><span class="cl">                        <span class="p">{</span><span class="nx">field</span><span class="o">:</span> <span class="s1">&#39;goods_name&#39;</span><span class="p">,</span> <span class="nx">title</span><span class="o">:</span> <span class="nx">__</span><span class="p">(</span><span class="s1">&#39;Goods_name&#39;</span><span class="p">),</span> <span class="nx">operate</span><span class="o">:</span> <span class="s1">&#39;LIKE&#39;</span><span class="p">,</span> <span class="nx">table</span><span class="o">:</span> <span class="nx">table</span><span class="p">,</span> <span class="kr">class</span><span class="o">:</span> <span class="s1">&#39;autocontent&#39;</span><span class="p">,</span> <span class="nx">formatter</span><span class="o">:</span> <span class="nx">Table</span><span class="p">.</span><span class="nx">api</span><span class="p">.</span><span class="nx">formatter</span><span class="p">.</span><span class="nx">content</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl">                        <span class="p">{</span><span class="nx">field</span><span class="o">:</span> <span class="s1">&#39;types.goods_type_name&#39;</span><span class="p">,</span> <span class="nx">title</span><span class="o">:</span> <span class="nx">__</span><span class="p">(</span><span class="s1">&#39;Goods_type&#39;</span><span class="p">),</span><span class="nx">operate</span><span class="o">:</span> <span class="s1">&#39;LIKE %...%&#39;</span><span class="p">,</span> <span class="nx">placeholder</span><span class="o">:</span> <span class="s1">&#39;模糊搜索，*表示任意字符&#39;</span><span class="p">},</span>  <span class="c1">//operate 是搜索的值   可以是  = &gt; &lt; 等等
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                        <span class="p">{</span><span class="nx">field</span><span class="o">:</span> <span class="s1">&#39;goods_name&#39;</span><span class="p">,</span> <span class="nx">title</span><span class="o">:</span> <span class="nx">__</span><span class="p">(</span><span class="s1">&#39;Goods_name&#39;</span><span class="p">),</span> <span class="nx">operate</span><span class="o">:</span> <span class="s1">&#39;LIKE&#39;</span><span class="p">,</span> <span class="nx">table</span><span class="o">:</span> <span class="nx">table</span><span class="p">,</span> <span class="kr">class</span><span class="o">:</span> <span class="s1">&#39;autocontent&#39;</span><span class="p">,</span> <span class="nx">formatter</span><span class="o">:</span> <span class="nx">Table</span><span class="p">.</span><span class="nx">api</span><span class="p">.</span><span class="nx">formatter</span><span class="p">.</span><span class="nx">content</span><span class="p">},</span>
 </span></span><span class="line"><span class="cl">                    <span class="p">]</span>
 </span></span><span class="line"><span class="cl">                <span class="p">]</span>
 </span></span></code></pre></td></tr></table>
@@ -651,6 +721,100 @@
 </span></span><span class="line"><span class="cl">        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\app\admin\model\Selfgoods</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="获取那个主页面传过来的ids">获取那个主页面传过来的ids
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="nx">Table</span><span class="p">.</span><span class="nx">api</span><span class="p">.</span><span class="nx">init</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">extend</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">index_url</span><span class="o">:</span> <span class="s1">&#39;follow/index&#39;</span> <span class="o">+</span> <span class="nx">location</span><span class="p">.</span><span class="nx">search</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">add_url</span><span class="o">:</span> <span class="s1">&#39;follow/add/ids/&#39;</span><span class="o">+</span><span class="nx">$</span><span class="p">(</span><span class="s2">&#34;#ids&#34;</span><span class="p">).</span><span class="nx">html</span><span class="p">(),</span>   <span class="c1">//这个是获取的ids
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="nx">edit_url</span><span class="o">:</span> <span class="s1">&#39;follow/edit&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">// del_url: &#39;follow/del&#39;,
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="nx">multi_url</span><span class="o">:</span> <span class="s1">&#39;follow/multi&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">import_url</span><span class="o">:</span> <span class="s1">&#39;follow/import&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">table</span><span class="o">:</span> <span class="s1">&#39;follow&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="js的按钮时间修改">js的按钮时间修改
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="p">{</span><span class="nx">field</span><span class="o">:</span> <span class="s1">&#39;follow_createtime&#39;</span><span class="p">,</span> <span class="nx">title</span><span class="o">:</span> <span class="nx">__</span><span class="p">(</span><span class="s1">&#39;Follow_createtime&#39;</span><span class="p">),</span> <span class="nx">operate</span><span class="o">:</span><span class="s1">&#39;RANGE&#39;</span><span class="p">,</span> <span class="nx">addclass</span><span class="o">:</span><span class="s1">&#39;datetimerange&#39;</span><span class="p">,</span> <span class="nx">datetimeFormat</span><span class="o">:</span><span class="s2">&#34;YYYY-MM-DD&#34;</span><span class="p">,</span> <span class="nx">formatter</span><span class="o">:</span> <span class="nx">Table</span><span class="p">.</span><span class="nx">api</span><span class="p">.</span><span class="nx">formatter</span><span class="p">.</span><span class="nx">datetime</span><span class="p">},</span> <span class="c1">//时间格式化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">{</span><span class="nx">field</span><span class="o">:</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="nx">title</span><span class="o">:</span> <span class="nx">__</span><span class="p">(</span><span class="s1">&#39;Type&#39;</span><span class="p">),</span> <span class="nx">operate</span><span class="o">:</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl"><span class="nx">searchList</span><span class="o">:</span> <span class="p">{</span><span class="s2">&#34;source&#34;</span><span class="o">:</span><span class="nx">__</span><span class="p">(</span><span class="s1">&#39;客户来源&#39;</span><span class="p">),</span><span class="s1">&#39;stage&#39;</span><span class="o">:</span><span class="nx">__</span><span class="p">(</span><span class="s1">&#39;客户阶段&#39;</span><span class="p">),</span><span class="s1">&#39;Industry&#39;</span><span class="o">:</span><span class="nx">__</span><span class="p">(</span><span class="s1">&#39;客户行业&#39;</span><span class="p">),</span><span class="s1">&#39;ontract&#39;</span><span class="o">:</span><span class="nx">__</span><span class="p">(</span><span class="s1">&#39;合同类型&#39;</span><span class="p">),</span><span class="s1">&#39;project&#39;</span><span class="o">:</span><span class="nx">__</span><span class="p">(</span><span class="s1">&#39;项目类型&#39;</span><span class="p">),</span><span class="s1">&#39;System&#39;</span><span class="o">:</span><span class="nx">__</span><span class="p">(</span><span class="s1">&#39;系统名称&#39;</span><span class="p">)},</span>
+</span></span><span class="line"><span class="cl"><span class="nx">custom</span><span class="o">:</span><span class="p">{</span><span class="s1">&#39;source&#39;</span><span class="o">:</span><span class="s1">&#39;primary&#39;</span><span class="p">,</span><span class="s1">&#39;stage&#39;</span><span class="o">:</span><span class="s1">&#39;success&#39;</span><span class="p">,</span><span class="s1">&#39;Industry&#39;</span><span class="o">:</span><span class="s1">&#39;warning&#39;</span><span class="p">,</span><span class="s1">&#39;ontract&#39;</span><span class="o">:</span><span class="s1">&#39;danger&#39;</span><span class="p">,</span><span class="s1">&#39;project&#39;</span><span class="o">:</span><span class="s1">&#39;info&#39;</span><span class="p">,</span><span class="s1">&#39;System&#39;</span><span class="o">:</span><span class="s1">&#39;success&#39;</span><span class="p">},</span><span class="nx">formatter</span><span class="o">:</span> <span class="nx">Table</span><span class="p">.</span><span class="nx">api</span><span class="p">.</span><span class="nx">formatter</span><span class="p">.</span><span class="nx">label</span><span class="p">},</span>   <span class="c1">//按钮颜色
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="控制器-获取后台用户id">控制器 获取后台用户id
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="c1">//获取后台用户 角色id
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span> <span class="nv">$rous</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">auth</span><span class="o">-&gt;</span><span class="na">getGroupIds</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nv">$rous</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">error</span><span class="p">(</span><span class="nx">__</span><span class="p">(</span><span class="s1">&#39;没有权利修改&#39;</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//获取后台用户id
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$uid</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">auth</span><span class="o">-&gt;</span><span class="na">id</span><span class="p">;</span> 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="where-多条件in-or">where 多条件in or
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"> <span class="c1">//合同未交付数 // 这里是负责人  技术员  签订人
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>       <span class="nv">$contracts_count</span> <span class="o">=</span> <span class="nx">Db</span><span class="o">::</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;fa_contracts&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">           <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;delivery_status&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;&gt;&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">           <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="nv">$query</span><span class="p">)</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$admin_id</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">               <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;contracts_manager_id&#39;</span><span class="p">,</span> <span class="nv">$admin_id</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                     <span class="o">-&gt;</span><span class="na">whereOr</span><span class="p">(</span><span class="s1">&#39;contracts_signer_id&#39;</span><span class="p">,</span> <span class="nv">$admin_id</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                     <span class="o">-&gt;</span><span class="na">whereIn</span><span class="p">(</span><span class="s1">&#39;contracts_technician_id&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nv">$admin_id</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">           <span class="p">})</span>
+</span></span><span class="line"><span class="cl">           <span class="o">-&gt;</span><span class="na">whereTime</span><span class="p">(</span><span class="s1">&#39;createtime&#39;</span><span class="p">,</span> <span class="nv">$tian</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">           <span class="o">-&gt;</span><span class="na">count</span><span class="p">();</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="上面就是一些我了解的东西">上面就是一些我了解的东西
@@ -727,6 +891,19 @@
 </article>
 
             
+                
+<article class="">
+    <a href="/dev/p/fastadmin%E5%AD%A6%E4%B9%A0/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">fastadmin学习</h2>
+        </div>
+    </a>
+</article>
+
+            
         </div>
     </div>
 </aside>
@@ -784,7 +961,7 @@
         
             2020 - 
         
-        2024 Example Person
+        2025 Example Person
     </section>
     
     <section class="powerby">
